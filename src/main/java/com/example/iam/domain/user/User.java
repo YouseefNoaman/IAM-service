@@ -1,102 +1,119 @@
 package com.example.iam.domain.user;
 
-import com.example.iam.domain.common.BaseEntity;
-import lombok.*;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.relational.core.mapping.Column;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.example.iam.domain.common.BaseEntity;
 
-@Table("users")
-@Getter
-@Setter
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * User entity representing a system user with authentication details. Implements Spring Security's
+ * UserDetails for authentication integration.
+ */
+@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class User extends BaseEntity implements UserDetails {
+@EqualsAndHashCode(callSuper = true)
+@Table("users")
+public final class User extends BaseEntity implements UserDetails {
 
-    @Column("email")
-    private String email;
+  /**
+   * User's first name.
+   */
+  private String firstName;
 
-    @Column("password")
-    private String password;
+  /**
+   * User's last name.
+   */
+  private String lastName;
 
-    @Column("first_name")
-    private String firstName;
+  /**
+   * User's email address (used as username).
+   */
+  private String email;
 
-    @Column("last_name")
-    private String lastName;
+  /**
+   * User's encrypted password.
+   */
+  private String password;
 
-    @Column("enabled")
-    @Builder.Default
-    private boolean enabled = true;
+  /**
+   * User's role in the system.
+   */
+  private UserRole role;
 
-    @Column("account_non_expired")
-    @Builder.Default
-    private boolean accountNonExpired = true;
+  /**
+   * Flag indicating if the account is enabled.
+   */
+  private boolean enabled;
 
-    @Column("account_non_locked")
-    @Builder.Default
-    private boolean accountNonLocked = true;
+  /**
+   * Flag indicating if the account is locked.
+   */
+  private boolean accountNonLocked;
 
-    @Column("credentials_non_expired")
-    @Builder.Default
-    private boolean credentialsNonExpired = true;
+  /**
+   * Flag indicating if the account is expired.
+   */
+  private boolean accountNonExpired;
 
-    @Transient
-    @Builder.Default
-    private Set<String> roles = new HashSet<>();
+  /**
+   * Flag indicating if the credentials are expired.
+   */
+  private boolean credentialsNonExpired;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-            .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-            .collect(Collectors.toSet());
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return Collections.singletonList(
+        new SimpleGrantedAuthority("ROLE_" + role.toString())
+    );
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return accountNonExpired;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return accountNonLocked;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return credentialsNonExpired;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
     }
-
-    @Override
-    public String getUsername() {
-        return email;
+    if (!(o instanceof User)) {
+      return false;
     }
+    return super.equals(o);
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return getId() != null && Objects.equals(getId(), user.getId());
-    }
-
-    @Override
-    public final int hashCode() {
-        return getClass().hashCode();
-    }
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
 }

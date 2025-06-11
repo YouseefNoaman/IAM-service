@@ -1,22 +1,27 @@
 package com.example.iam.domain.user;
 
-import lombok.*;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
-
-@Table("user_roles")
+/**
+ * Enumeration of user roles in the system.
+ */
 @Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-public class UserRole {
-    @Column("user_id")
-    private UUID userId;
+@RequiredArgsConstructor
+public enum UserRole {
 
-    @Column("role")
-    private String role;
-} 
+  /**
+   * Administrator role with full system access.
+   */
+  ADMIN("Administrator"),
+
+  /**
+   * Regular user role with limited access.
+   */
+  USER("User");
+
+  /**
+   * Human-readable name of the role.
+   */
+  private final String displayName;
+}

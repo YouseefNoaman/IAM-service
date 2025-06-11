@@ -1,7 +1,11 @@
 package com.example.iam.config;
 
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -11,58 +15,92 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
-
+/**
+ * Configuration class for Redis caching and connection settings.
+ */
 @Configuration
-@EnableCaching
-public class RedisConfig {
+public final class RedisConfig {
 
-    @Value("${spring.redis.host:localhost}")
-    private String redisHost;
+  /**
+   * Default cache TTL in seconds.
+   */
+  private static final int DEFAULT_CACHE_TTL = 60;
 
-    @Value("${spring.redis.port:6379}")
-    private int redisPort;
+  /**
+   * User cache TTL in seconds.
+   */
+  private static final int USER_CACHE_TTL = 30;
 
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
-        return new LettuceConnectionFactory(configuration);
-    }
+  /**
+   * Auth token cache TTL in seconds.
+   */
+  private static final int AUTH_TOKEN_CACHE_TTL = 5;
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        return template;
-    }
+  /**
+   * Redis host from configuration.
+   */
+  @Value("${spring.redis.host}")
+  private String redisHost;
 
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        var defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(60))
-            .serializeKeysWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())
-            )
-            .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer())
-            )
-            .disableCachingNullValues();
+  /**
+   * Redis port from configuration.
+   */
+  @Value("${spring.redis.port}")
+  private int redisPort;
 
-        return RedisCacheManager.builder(connectionFactory)
-            .cacheDefaults(defaultConfig)
-            .withCacheConfiguration("userCache", 
-                RedisCacheConfiguration.defaultCacheConfig()
-                    .entryTtl(Duration.ofMinutes(30)))
-            .withCacheConfiguration("authCache", 
-                RedisCacheConfiguration.defaultCacheConfig()
-                    .entryTtl(Duration.ofMinutes(5)))
-            .build();
-    }
-} 
+  /**
+   * Creates Redis connection factory.
+   *
+   * @return the Redis connection factory
+   */
+  @Bean
+  public RedisConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration config =
+        new RedisStandaloneConfiguration(redisHost, redisPort);
+    return new LettuceConnectionFactory(config);
+  }
+
+  /**
+   * Creates Redis template for key-value operations.
+   *
+   * @param connectionFactory the Redis connection factory
+   * @return the configured Redis template
+   */
+  @Bean
+  public RedisTemplate<String, Object> redisTemplate(
+      final RedisConnectionFactory connectionFactory) {
+    RedisTemplate<String, Object> template = new RedisTemplate<>();
+    template.setConnectionFactory(connectionFactory);
+    template.setKeySerializer(new StringRedisSerializer());
+    template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+    return template;
+  }
+
+  /**
+   * Creates cache manager with TTL configurations.
+   *
+   * @param connectionFactory the Redis connection factory
+   * @return the configured cache manager
+   */
+  @Bean
+  public CacheManager cacheManager(final RedisConnectionFactory connectionFactory) {
+    RedisCacheConfiguration defaultConfig = RedisCacheConfiguration
+        .defaultCacheConfig()
+        .entryTtl(Duration.ofSeconds(DEFAULT_CACHE_TTL));
+
+    Map<String, RedisCacheConfiguration> configs = new HashMap<>();
+
+    configs.put("users", RedisCacheConfiguration.defaultCacheConfig()
+        .entryTtl(Duration.ofSeconds(USER_CACHE_TTL)));
+
+    configs.put("authTokens", RedisCacheConfiguration.defaultCacheConfig()
+        .entryTtl(Duration.ofSeconds(AUTH_TOKEN_CACHE_TTL)));
+
+    return RedisCacheManager.builder(connectionFactory)
+        .cacheDefaults(defaultConfig)
+        .withInitialCacheConfigurations(configs)
+        .build();
+  }
+}

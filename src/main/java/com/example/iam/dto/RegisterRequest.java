@@ -18,4 +18,6 @@ public record RegisterRequest(
 
     @NotBlank(message = "Last name is required")
     String lastName
-) {} 
+) {
+
+}
