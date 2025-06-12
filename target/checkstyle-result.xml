@@ -1,3 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="9.3">
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\ApplicationConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\AuditingConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\JpaConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\OpenApiConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\R2dbcConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\RedisConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\SecurityAuditorAware.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\config\SecurityConfig.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\controller\AuthenticationController.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\controller\HealthController.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\controller\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\domain\common\BaseEntity.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\domain\common\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\domain\user\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\domain\user\User.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\domain\user\UserRole.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\AuthenticationRequest.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\AuthenticationResponse.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\RegisterRequest.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\rest\AuthenticationRestResponse.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\dto\rest\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\ApiError.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\auth\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\auth\UserAlreadyExistsException.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\GlobalExceptionHandler.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\InvalidCredentialsException.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\rest\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\rest\RestAuthenticationException.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\exception\UserAlreadyExistsException.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\IamServiceApplication.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\repository\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\repository\UserRepository.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\repository\UserRoleRepository.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\security\JwtAuthenticationFilter.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\security\JwtService.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\security\package-info.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\service\AuthenticationService.java">
+</file>
+<file name="C:\Users\yosef\IdeaProjects\IAM-service\IAM-service\src\main\java\com\example\iam\service\package-info.java">
+</file>
 </checkstyle>
